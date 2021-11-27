@@ -3,6 +3,7 @@
     <button mat-button routerLink="/">User Manager Tool</button>
   </span>
 <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+  <mat-label *ngIf="!timedOut">{{idleState}} {{countdown}}</mat-label>
   <button mat-button routerLink="/login">
     <mat-icon>power_settings_new</mat-icon>
     Login

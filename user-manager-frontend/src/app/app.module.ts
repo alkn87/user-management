@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {NgIdleModule} from "@ng-idle/core";
 
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -26,6 +27,7 @@ import {MatInputModule} from "@angular/material/input";
   ],
   imports: [
     BrowserModule,
+    NgIdleModule.forRoot(),
     BrowserAnimationsModule,
     AppRoutingModule,
     MatButtonModule,
