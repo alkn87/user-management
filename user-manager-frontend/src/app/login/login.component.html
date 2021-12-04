@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-content>
-    <form>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <h2>Sign in to your account</h2>
 
       <mat-error >

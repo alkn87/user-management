@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
     });
 
     this.idle.onTimeoutWarning.subscribe((countdown: number) => {
-      console.log("You will be timed out in " + countdown + " seconds.");
+      //console.log("You will be timed out in " + countdown + " seconds.");
       this.countdown = countdown;
     });
   }

@@ -16,6 +16,18 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import {HttpClientModule} from "@angular/common/http";
+import {ReactiveFormsModule} from "@angular/forms";
+
+const materialDesignModules = [
+  MatButtonModule,
+  MatIconModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatInputModule
+]
 
 @NgModule({
   declarations: [
@@ -28,15 +40,11 @@ import {MatInputModule} from "@angular/material/input";
   imports: [
     BrowserModule,
     NgIdleModule.forRoot(),
+    HttpClientModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule
+    materialDesignModules
   ],
   providers: [],
   bootstrap: [AppComponent]

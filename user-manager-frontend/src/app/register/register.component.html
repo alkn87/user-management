@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-content>
-    <form>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <h2>Create your account</h2>
 
       <mat-error>
