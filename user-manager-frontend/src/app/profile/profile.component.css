@@ -7,3 +7,8 @@ mat-card {
 mat-form-field {
   display: block;
 }
+
+hr.dashed {
+  border-top: 2px dashed #bbb;
+  margin-top: 2rem;
+}
