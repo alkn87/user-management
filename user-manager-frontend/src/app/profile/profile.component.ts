@@ -8,21 +8,18 @@ import Validation from "../utils/validation";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  profileForm = new FormGroup({
-    password: new FormControl(''),
-    confirm_password: new FormControl(''),
-  });
+  profileForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
-  }
-
-  ngOnInit(): void {
     this.profileForm = this.fb.group({
       password: ['', [Validators.required,]],
       confirm_password: ['', Validators.required],
     }, {
       validators: [Validation.match('password', 'confirm_password')]
     });
+  }
+
+  ngOnInit(): void {
   }
 
   get f(): { [key: string]: AbstractControl } {

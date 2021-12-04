@@ -7,19 +7,16 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  registerForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
-  });
+  registerForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
-  }
-
-  ngOnInit(): void {
     this.registerForm = this.fb.group({
       username: ['', [Validators.required,]],
       password: ['', Validators.required],
-    })
+    });
+  }
+
+  ngOnInit(): void {
   }
 
   get f(): { [key: string]: AbstractControl } {

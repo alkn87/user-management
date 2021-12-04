@@ -7,19 +7,16 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
-  });
+  loginForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
-  }
-
-  ngOnInit(): void {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required,]],
       password: ['', Validators.required],
     })
+  }
+
+  ngOnInit(): void {
   }
 
   get f(): { [key: string]: AbstractControl } {
