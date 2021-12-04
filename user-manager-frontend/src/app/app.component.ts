@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  countdown: number = 30;
+  countdown: number = 60;
   timedOut: boolean = false;
   idleState = "NOT_STARTED";
 
