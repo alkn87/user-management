@@ -13,9 +13,17 @@ public class User {
     @GeneratedValue
     @Column(nullable = false, updatable = false)
     private Long id;
+
+    @Column(unique = true)
     private String username;
+
+    @Column()
     private String password;
+
+    @Column()
     private String firstname;
+
+    @Column()
     private String lastname;
 
     public User(String username, String password, String firstname, String lastname){

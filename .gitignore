@@ -58,3 +58,4 @@ build/
 ### VS Code ###
 .vscode/
 /user-manager-backend/user-manager-backend.iml
+/user-manager-frontend/package-lock.json
