@@ -51,9 +51,7 @@ public class UserController {
             Long id = userService.getUserIdIfPasswordMatches(userLogin);
             loginRetryService.clearAttempts(userLogin.getUsername(), request.getRemoteAddr());
             return ResponseEntity.ok(jwtService.buildJWT(id));
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (PasswordAuthFailedException e) {
+        } catch (UserNotFoundException | PasswordAuthFailedException e) {
             loginRetryService.failedAttempt(userLogin.getUsername(), request.getRemoteAddr());
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }

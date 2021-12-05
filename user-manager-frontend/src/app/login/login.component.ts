@@ -3,6 +3,7 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/form
 import {AuthService} from "../core/auth/auth.service";
 import {User} from "../models/user";
 import {Router} from "@angular/router";
+import {catchError, EMPTY, from, Observable, of, tap} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,8 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+
+  errorMessage: string = "";
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
@@ -36,8 +39,21 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password
     }
 
-    this.authService.loginUser(user);
-    //this.loginForm.reset();
-    this.router.navigate(['/home']);
+    this.authService.loginUser(user).pipe(
+      tap(() => {
+        this.router.navigate(['/home']);
+      }),
+      catchError((err, caught) => {
+        switch (err.status) {
+          case 403:
+            this.errorMessage = "username oder password nicht korrekt";
+            break;
+          case 418:
+            this.errorMessage = "Du bist gesperrt! Versuche es später erneut";
+            break;
+        }
+        return EMPTY;
+      })
+    ).subscribe();
   }
 }

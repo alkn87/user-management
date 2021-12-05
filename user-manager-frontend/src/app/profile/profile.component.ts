@@ -5,6 +5,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DeleteProfileComponent} from "./delete-profile/delete-profile.component";
 import {AuthService} from "../core/auth/auth.service";
 import {Router} from "@angular/router";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-profile',
@@ -35,8 +36,9 @@ export class ProfileComponent implements OnInit {
     // do nothing if form is invalid
     if (this.profileForm.invalid) return;
     console.log(this.profileForm.value);
+    // TODO potential error handling.
     this.authService.changePassword(this.profileForm.value.confirm_password).subscribe(() => {
-        this.changedFlag = true;
+      this.changedFlag = true;
     });
   }
 
@@ -46,10 +48,15 @@ export class ProfileComponent implements OnInit {
       .then((confirmed) => {
         if (confirmed) {
           console.log('User confirmed to delete profile:', confirmed)
-          this.authService.deleteUser().subscribe()
-          this.router.navigate(['/login'])
+          // TODO error handling
+          this.authService.deleteUser().pipe(
+            tap(() => {
+              this.router.navigate(['/login'])
+              this.authService.logoutUser();
+            })).subscribe()
         }
       })
-      .catch(() => {});
+      .catch(() => {
+      });
   }
 }

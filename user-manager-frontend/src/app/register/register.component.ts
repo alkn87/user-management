@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../core/auth/auth.service";
 import {Router} from "@angular/router";
+import {catchError, EMPTY, tap} from "rxjs";
 
 @Component({
   selector: 'app-register',
@@ -10,6 +11,7 @@ import {Router} from "@angular/router";
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  errorMessage: string = "";
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
@@ -39,7 +41,17 @@ export class RegisterComponent implements OnInit {
       password: this.registerForm.value.password
     }
 
-    this.authService.registerUser(applicationUser).subscribe()
-    this.router.navigate(['/login'])
+
+    this.authService.registerUser(applicationUser).pipe(
+      tap(() => {
+        this.router.navigate(['/login']);
+      }),
+      catchError(err => {
+        if(err.status === 403){
+          this.errorMessage = "Username existiert bereits";
+        }
+        return EMPTY;
+      })
+    ).subscribe()
   }
 }
