@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../core/auth/auth.service";
 import {User} from "../models/user";
 import {Router} from "@angular/router";
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.authService.loginUser(user);
-    this.loginForm.reset();
-    this.router.navigate(['/login']);
+    //this.loginForm.reset();
+    this.router.navigate(['/home']);
   }
 }
