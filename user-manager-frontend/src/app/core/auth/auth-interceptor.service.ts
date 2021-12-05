@@ -13,7 +13,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const token = this.authService.getToken();
     req = req.clone({
       setHeaders: {
-        Authorization: "Bearer " + token
+        Authorization: token || ''
       }
     });
     return next.handle(req);

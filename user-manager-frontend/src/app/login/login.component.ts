@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../core/auth/auth.service";
+import {User} from "../models/user";
+import {Router} from "@angular/router";
+import {catchError, EMPTY, from, Observable, of, tap} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -10,7 +13,9 @@ import {AuthService} from "../core/auth/auth.service";
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  errorMessage: string = "";
+
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required,]],
       password: ['', Validators.required],
@@ -28,5 +33,27 @@ export class LoginComponent implements OnInit {
     // do nothing if form is invalid
     if (this.loginForm.invalid) return;
     console.log(this.loginForm.value);
+
+    let user: User = {
+      username: this.loginForm.value.username,
+      password: this.loginForm.value.password
+    }
+
+    this.authService.loginUser(user).pipe(
+      tap(() => {
+        this.router.navigate(['/home']);
+      }),
+      catchError((err, caught) => {
+        switch (err.status) {
+          case 403:
+            this.errorMessage = "username oder password nicht korrekt";
+            break;
+          case 418:
+            this.errorMessage = "Du bist gesperrt! Versuche es später erneut";
+            break;
+        }
+        return EMPTY;
+      })
+    ).subscribe();
   }
 }

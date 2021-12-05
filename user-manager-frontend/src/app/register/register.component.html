@@ -3,10 +3,6 @@
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <h2>Create your account</h2>
 
-      <mat-error>
-        Username already exists!
-      </mat-error>
-
       <mat-form-field class="full-width-input">
         <input matInput placeholder="First name" formControlName="firstname" required>
         <mat-error>
@@ -35,6 +31,9 @@
         </mat-error>
       </mat-form-field>
 
+      <mat-error *ngIf="errorMessage">
+        {{errorMessage}}
+      </mat-error>
       <button mat-raised-button class="mgt-5" color="primary" type="submit" [disabled]="!registerForm.valid">Create account</button>
 
     </form>
