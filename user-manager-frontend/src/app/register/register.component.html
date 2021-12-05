@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-content>
-    <form>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <h2>Create your account</h2>
 
       <mat-error>
@@ -21,7 +21,7 @@
         </mat-error>
       </mat-form-field>
 
-      <button mat-raised-button color="primary">Create account</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid">Create account</button>
 
     </form>
   </mat-card-content>

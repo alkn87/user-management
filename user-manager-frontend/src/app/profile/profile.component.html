@@ -1,29 +1,28 @@
 <mat-card>
   <mat-card-content>
-    <form>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
       <h2>Your Profile</h2>
 
-      <h2>Change password</h2>
-      <mat-error>
-        The inputs are not correct!
-      </mat-error>
+      <h3>Change password</h3>
       <mat-form-field class="full-width-input">
-        <input matInput type="password" placeholder="Password"  formControlName="password" required>
-        <mat-error>
-          Please provide a valid username
-        </mat-error>
-      </mat-form-field>
+        <input matInput type="password" placeholder="Password" formControlName="password" required>
 
+      </mat-form-field>
       <mat-form-field class="full-width-input">
         <input matInput type="password" placeholder="Confirm Password" formControlName="confirm_password" required>
-        <mat-error>
-          Please provide a valid password
+        <mat-error *ngIf="f['confirm_password'].errors && f['confirm_password'].errors['required']">
+          Confirm Password is required
+        </mat-error>
+        <mat-error *ngIf="f['confirm_password'].errors && f['confirm_password'].errors['matching']">
+          Confirm Password does not match
         </mat-error>
       </mat-form-field>
 
-      <button mat-raised-button color="primary">Apply changes</button>
-
+      <button mat-raised-button color="primary" type="submit" [disabled]="!profileForm.valid">Apply changes</button>
     </form>
+    <hr class="dashed">
+    <h3>Delete Profile</h3>
+    <button mat-raised-button color="warn">Delete</button>
   </mat-card-content>
 
 </mat-card>
