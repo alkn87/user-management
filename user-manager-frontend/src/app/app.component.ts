@@ -1,6 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {Router} from "@angular/router";
+import {AuthService} from "./core/auth/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent implements OnInit {
   timedOut: boolean = false;
   idleState = "NOT_STARTED";
 
-  constructor(private idle: Idle, private cd: ChangeDetectorRef, private router: Router) {
+  constructor(private idle: Idle, private cd: ChangeDetectorRef, private router: Router, public authService: AuthService) {
     idle.setIdle(1);
     idle.setTimeout(this.countdown);
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
@@ -50,7 +51,7 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    // logout user
+    this.authService.logoutUser();
     this.router.navigate(['/login']);
   }
 }

@@ -8,11 +8,11 @@
     <mat-icon>power_settings_new</mat-icon>
     Login
   </button>
-  <button mat-button>
+  <button mat-button (click)="logout()" *ngIf="!authService.isLoggedIn">
     <mat-icon>exit_to_app</mat-icon>
     Logout
   </button>
-  <button mat-button routerLink="/profile">
+  <button mat-button routerLink="/profile" *ngIf="!authService.isLoggedIn">
     <mat-icon>account_circle</mat-icon>
     Profile
   </button>

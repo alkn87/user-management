@@ -1,27 +1,27 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import { environment } from '../../../environments/environment'
+import {environment} from '../../../environments/environment'
 import {catchError, Observable, throwError} from "rxjs";
 import {ApplicationUser, User} from "../../models/user";
-import {LoginResponse} from "../../models/login-response";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
-  // TODO: backend return value
-  registerUser(applicationUser: ApplicationUser): Observable<any> {
-    return this.httpClient.post(`${environment.apiUrl}/register`, applicationUser)
-      .pipe(catchError(this.handleError));
+  registerUser(applicationUser: ApplicationUser) {
+    this.httpClient.post(`${environment.apiUrl}/user/register`, applicationUser)
+      //.pipe(catchError(this.handleError));
   }
 
   loginUser(user: User) {
-    this.httpClient.post<LoginResponse>(`${environment.apiUrl}/login`, user)
-      .subscribe((res: LoginResponse) => {
-        localStorage.setItem('access_token', res.token)
+    this.httpClient.post(`${environment.apiUrl}/user/login`, user, {responseType: 'text'})
+      .subscribe((authToken: string) => {
+        console.log("authToken: " + authToken);
+        localStorage.setItem('access_token', authToken);
       });
   }
 
