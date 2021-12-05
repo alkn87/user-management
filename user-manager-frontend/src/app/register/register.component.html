@@ -8,6 +8,20 @@
       </mat-error>
 
       <mat-form-field class="full-width-input">
+        <input matInput placeholder="First name" formControlName="firstname" required>
+        <mat-error>
+          Please enter your first name
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <input matInput placeholder="Last name" formControlName="lastname" required>
+        <mat-error>
+          Please enter your last name
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
         <input matInput placeholder="Username" formControlName="username" required>
         <mat-error>
           Please provide a valid username
@@ -21,7 +35,7 @@
         </mat-error>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid">Create account</button>
+      <button mat-raised-button class="mgt-5" color="primary" type="submit" [disabled]="!registerForm.valid">Create account</button>
 
     </form>
   </mat-card-content>
