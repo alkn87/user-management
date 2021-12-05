@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
       password: this.registerForm.value.password
     }
 
-    this.authService.registerUser(applicationUser)
+    this.authService.registerUser(applicationUser).subscribe()
     //this.router.navigate(['/login'])
   }
 }

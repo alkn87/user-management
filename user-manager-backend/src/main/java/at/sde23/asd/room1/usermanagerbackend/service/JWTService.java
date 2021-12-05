@@ -19,7 +19,7 @@ public class JWTService {
 
     public String buildJWT(Long userID) {
         return Jwts.builder()
-                .setId(userID.toString())
+                .setSubject(userID.toString())
                 .signWith(signingKey)
                 .compact();
     }
@@ -29,6 +29,6 @@ public class JWTService {
                 .setSigningKey(signingKey)
                 .build()
                 .parseClaimsJws(jwt);
-        return Long.valueOf(parsedJwt.getBody().getId());
+        return Long.valueOf(parsedJwt.getBody().getSubject());
     }
 }

@@ -12,8 +12,8 @@ export class AuthService {
   constructor(private httpClient: HttpClient) {
   }
 
-  registerUser(applicationUser: ApplicationUser) {
-    this.httpClient.post(`${environment.apiUrl}/user/register`, applicationUser)
+  registerUser(applicationUser: ApplicationUser): Observable<any> {
+    return this.httpClient.post(`${environment.apiUrl}/user/register`, applicationUser)
       //.pipe(catchError(this.handleError));
   }
 
