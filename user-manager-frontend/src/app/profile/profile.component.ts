@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import Validation from "../utils/validation";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {DeleteProfileComponent} from "./delete-profile/delete-profile.component";
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +12,7 @@ import Validation from "../utils/validation";
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private modalService: NgbModal) {
     this.profileForm = this.fb.group({
       password: ['', [Validators.required,]],
       confirm_password: ['', Validators.required],
@@ -32,4 +34,11 @@ export class ProfileComponent implements OnInit {
     console.log(this.profileForm.value);
   }
 
+  openDeleteProfileDialog() {
+    const modalRef = this.modalService.open(DeleteProfileComponent, {size: 'lg'});
+    modalRef.result
+      .then((confirmed) => console.log('User confirmed:', confirmed))
+      .catch(() => {
+      });
+  }
 }
