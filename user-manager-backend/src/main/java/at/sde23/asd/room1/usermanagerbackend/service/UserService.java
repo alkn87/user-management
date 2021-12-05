@@ -24,11 +24,6 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public List<User> findAllUsers() {
-        return userRepo.findAll();
-    }
-
-
     @SneakyThrows
     public User register(User user) throws UsernameAlreadyExistsException {
 
@@ -47,24 +42,20 @@ public class UserService {
         return user.getId();
     }
 
+    public void deleteUser(Long id) {
+        userRepo.deleteById(id);
+    }
+
+    public void changePassword(Long id, String newPassword) throws UserNotFoundException{
+        User user = userRepo.findUserById(id).orElseThrow(UserNotFoundException::new);
+        user.setPassword(digest(newPassword));
+        userRepo.save(user);
+    }
+
     @SneakyThrows
     private String digest(String preDigest){
         MessageDigest md = MessageDigest.getInstance("SHA-512");
         return new String(md.digest(preDigest.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
     }
-
-
-    public User updateUser(User user) {
-        return userRepo.save(user);
-    }
-
-    public void deleteUser(Long id) {
-        userRepo.deleteById(id);
-    }
-
-//    public User findUserByUsername(String username) {
-//        return userRepo.findUserByUsername(username)
-//                .orElseThrow(() -> new UserNotFoundException("User by Username" + username + " was not found"));
-//    }
 
 }

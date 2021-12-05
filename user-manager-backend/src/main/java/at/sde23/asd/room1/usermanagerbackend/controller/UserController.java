@@ -27,53 +27,56 @@ public class UserController {
         this.jwtService = jwtService;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.findAllUsers();
-        return ResponseEntity.ok(users);
-    }
-
-//    @GetMapping("/find/{username}")
-//    public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username) {
-//        User user = userService.findUserByUsername(username);
-//        return ResponseEntity.ok(user);
-//    }
-
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
-        User newUser = null;
         try {
-            newUser = userService.register(user);
+            return new ResponseEntity<>(userService.register(user), HttpStatus.CREATED);
         } catch (UsernameAlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserLogin userLogin) {
-        Long userID;
         try {
-            userID = userService.getUserIdIfPasswordMatches(userLogin);
+            return ResponseEntity.ok(jwtService.buildJWT(userService.getUserIdIfPasswordMatches(userLogin)));
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (PasswordAuthFailedException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        return ResponseEntity.ok(jwtService.buildJWT(userID));
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
-        User updateduser = userService.updateUser(user);
-        return new ResponseEntity<>(updateduser, HttpStatus.OK);
+    @GetMapping("/whoami")
+    public ResponseEntity<Long> whoAmI(@RequestHeader("Authorization") String authHeader) {
+        try {
+            return ResponseEntity.ok(jwtService.parseJWT(authHeader));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
-        userService.deleteUser(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PostMapping("/changePassword")
+    public ResponseEntity<User> changePassword(@RequestBody String newPassword, @RequestHeader("Authorization") String authHeader) {
+        try {
+            Long id = jwtService.parseJWT(authHeader);
+            userService.changePassword(id, newPassword);
+        } catch (UserNotFoundException e) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        return ResponseEntity.ok().build();
     }
 
-
+    @PostMapping("/delete")
+    public ResponseEntity<User> delete(@RequestHeader("Authorization") String authHeader) {
+        try {
+            Long id = jwtService.parseJWT(authHeader);
+            userService.deleteUser(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+    }
 }

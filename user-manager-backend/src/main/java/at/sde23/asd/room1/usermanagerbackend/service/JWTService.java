@@ -1,12 +1,12 @@
 package at.sde23.asd.room1.usermanagerbackend.service;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.Date;
 
 @Service
 public class JWTService {
@@ -18,6 +18,17 @@ public class JWTService {
     }
 
     public String buildJWT(Long userID) {
-        return Jwts.builder().setId(userID.toString()).signWith(signingKey).compact();
+        return Jwts.builder()
+                .setId(userID.toString())
+                .signWith(signingKey)
+                .compact();
+    }
+
+    public Long parseJWT(String jwt) throws Exception{
+        Jws<Claims> parsedJwt = Jwts.parserBuilder()
+                .setSigningKey(signingKey)
+                .build()
+                .parseClaimsJws(jwt);
+        return Long.valueOf(parsedJwt.getBody().getId());
     }
 }
