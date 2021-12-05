@@ -19,6 +19,9 @@ import {MatInputModule} from "@angular/material/input";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {AuthInterceptor} from "./core/auth/auth-interceptor.service";
+import {DeleteProfileComponent} from './profile/delete-profile/delete-profile.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 const materialDesignModules = [
   MatButtonModule,
@@ -36,7 +39,8 @@ const materialDesignModules = [
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    DeleteProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,8 @@ const materialDesignModules = [
     ReactiveFormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    materialDesignModules
+    materialDesignModules,
+    NgbModule
   ],
   providers: [
     {
