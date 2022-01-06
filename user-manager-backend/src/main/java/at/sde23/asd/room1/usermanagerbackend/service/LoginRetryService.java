@@ -17,9 +17,9 @@ public class LoginRetryService {
         this.loginTries = new ConcurrentHashMap<>();
     }
 
-    public boolean canStillTry(String username, String remoteAddr) {
+    public boolean cannotRetry(String username, String remoteAddr) {
         int tries = loginTries.getOrDefault(username + remoteAddr, 0);
-        return tries < NUMBER_OF_FAILED_ATTEMPTS_ALLOWED;
+        return tries >= NUMBER_OF_FAILED_ATTEMPTS_ALLOWED;
     }
 
     public void clearAttempts(String username, String remoteAddr) {
@@ -27,7 +27,7 @@ public class LoginRetryService {
     }
 
     public void failedAttempt(String username, String remoteAddr) {
-        if (!canStillTry(username, remoteAddr)) {
+        if (cannotRetry(username, remoteAddr)) {
             return;
         }
         int tries = this.loginTries.compute(username + remoteAddr, (key, currentTries) -> {
@@ -41,10 +41,11 @@ public class LoginRetryService {
         if (tries == MAX_TRIES) {
             new Thread(() -> {
                 try {
-                    Thread.sleep(FACTOR_MILLS_TO_MIN * Long.valueOf(BLOCKED_IN_MINUTES));
+                    Thread.sleep(FACTOR_MILLS_TO_MIN * (long) BLOCKED_IN_MINUTES);
                     loginTries.put(username + remoteAddr, 0);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }).start();
         }

@@ -44,7 +44,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserLogin userLogin, HttpServletRequest request) {
         try {
-            if (!loginRetryService.canStillTry(userLogin.getUsername(), request.getRemoteAddr())) {
+            if (loginRetryService.cannotRetry(userLogin.getUsername(), request.getRemoteAddr())) {
                 return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
             }
             Long id = userService.getUserIdIfPasswordMatches(userLogin);
