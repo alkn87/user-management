@@ -1,18 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import Validation from "../utils/validation";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {DeleteProfileComponent} from "./delete-profile/delete-profile.component";
-import {AuthService} from "../core/auth/auth.service";
-import {Router} from "@angular/router";
-import {tap} from "rxjs";
+import {Component} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import Validation from '../utils/validation';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DeleteProfileComponent} from './delete-profile/delete-profile.component';
+import {AuthService} from '../core/auth/auth.service';
+import {Router} from '@angular/router';
+import {tap} from 'rxjs';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
   profileForm: FormGroup;
   changedFlag = false;
 
@@ -23,9 +23,6 @@ export class ProfileComponent implements OnInit {
     }, {
       validators: [Validation.match('password', 'confirm_password')]
     });
-  }
-
-  ngOnInit(): void {
   }
 
   get f(): { [key: string]: AbstractControl } {

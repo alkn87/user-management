@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment'
-import {catchError, first, map, Observable, tap, throwError} from "rxjs";
-import {ApplicationUser, User} from "../../models/user";
+import {first, Observable, tap} from 'rxjs';
+import {ApplicationUser, User} from '../../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +44,7 @@ export class AuthService {
 
   get isLoggedIn(): boolean {
     let authToken = localStorage.getItem('access_token');
-    return (authToken !== null) ? true : false;
+    return (authToken !== null);
   }
 
   getToken(): string | null {

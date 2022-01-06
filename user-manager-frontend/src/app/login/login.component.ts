@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../core/auth/auth.service";
-import {User} from "../models/user";
-import {Router} from "@angular/router";
-import {catchError, EMPTY, from, Observable, of, tap} from "rxjs";
+import {Component} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../core/auth/auth.service';
+import {User} from '../models/user';
+import {Router} from '@angular/router';
+import {catchError, EMPTY, tap} from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm: FormGroup;
 
   errorMessage: string = "";
@@ -20,9 +20,6 @@ export class LoginComponent implements OnInit {
       username: ['', [Validators.required,]],
       password: ['', Validators.required],
     });
-  }
-
-  ngOnInit(): void {
   }
 
   get f(): { [key: string]: AbstractControl } {

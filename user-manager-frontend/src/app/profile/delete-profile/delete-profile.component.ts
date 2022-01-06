@@ -6,12 +6,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './delete-profile.component.html',
   styleUrls: ['./delete-profile.component.css']
 })
-export class DeleteProfileComponent implements OnInit {
+export class DeleteProfileComponent {
 
   constructor(private activeModal: NgbActiveModal) { }
-
-  ngOnInit(): void {
-  }
 
   public decline() {
     this.activeModal.close(false);

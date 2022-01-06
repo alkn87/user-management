@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../core/auth/auth.service";
-import {Router} from "@angular/router";
-import {catchError, EMPTY, tap} from "rxjs";
+import { Component } from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../core/auth/auth.service';
+import {Router} from '@angular/router';
+import {catchError, EMPTY, tap} from 'rxjs';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   registerForm: FormGroup;
-  errorMessage: string = "";
+  errorMessage: string = '';
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
@@ -20,9 +20,6 @@ export class RegisterComponent implements OnInit {
       username: ['', [Validators.required,]],
       password: ['', Validators.required],
     });
-  }
-
-  ngOnInit(): void {
   }
 
   get f(): { [key: string]: AbstractControl } {
