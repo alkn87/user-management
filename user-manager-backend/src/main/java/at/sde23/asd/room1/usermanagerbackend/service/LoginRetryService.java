@@ -11,6 +11,8 @@ public class LoginRetryService {
 
     private final static int NUMBER_OF_FAILED_ATTEMPTS_ALLOWED = 3;
     private final static int BLOCKED_IN_MINUTES = 1;
+    private final static int MAX_TRIES = 3;
+    private final static int FACTOR_MILLS_TO_MIN = 60000;
 
     public LoginRetryService() {
         this.loginTries = new ConcurrentHashMap<>();
@@ -37,10 +39,10 @@ public class LoginRetryService {
         });
 
 
-        if (tries == 3) {
+        if (tries == MAX_TRIES) {
             new Thread(() -> {
                 try {
-                    Thread.sleep(1000 * 60 * BLOCKED_IN_MINUTES);
+                    Thread.sleep(FACTOR_MILLS_TO_MIN * BLOCKED_IN_MINUTES);
                     loginTries.put(username + remoteAddr, 0);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
