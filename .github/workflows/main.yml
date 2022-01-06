@@ -26,4 +26,4 @@ jobs:
           fi
 
       - name: Test
-        run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+        run: npm test
