@@ -1,7 +1,10 @@
 package at.sde23.asd.room1.usermanagerbackend.service;
 
 import at.sde23.asd.room1.usermanagerbackend.exception.JWTParseException;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
 import java.security.Key;
