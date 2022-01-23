@@ -1,6 +1,7 @@
 # user-management
 FH Campus Wien - ASD - User Management
 
+[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
 ## CI Status
 
 ### Backend
