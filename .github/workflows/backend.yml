@@ -1,4 +1,4 @@
-name: CI Spring app through Github Actions
+name: CI Backend
 
 on: push
 
