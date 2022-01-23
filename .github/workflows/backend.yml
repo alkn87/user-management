@@ -32,5 +32,5 @@ jobs:
         with:
           context: ./user-manager-backend
           push: true
-          tags: user-management:latest
+          tags: sjaghori/user-management:latest
 
