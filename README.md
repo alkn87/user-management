@@ -4,7 +4,7 @@ FH Campus Wien - ASD - User Management
 ## CI Status
 
 ### Backend
-![CI Backend](https://github.com/alkn87/user-management/actions/workflows/backend.yml/badge.svg?branch=main&flag=vm)
+![CI Backend](https://github.com/alkn87/user-management/actions/workflows/backend.yml/badge.svg?branch=main&flag=backend)
 [![codecov](https://codecov.io/gh/alkn87/user-management/branch/main/graph/badge.svg?token=EI23SSNO86)](https://codecov.io/gh/alkn87/user-management)
 
 ### Frontend
