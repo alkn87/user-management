@@ -1,4 +1,4 @@
-name: CI Angular app through Github Actions
+name: CI Frontend
 
 on: push
 
@@ -27,3 +27,9 @@ jobs:
 
       - name: Test
         run: npm test
+
+      - name: Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unittests
