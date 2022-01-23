@@ -40,11 +40,10 @@ jobs:
         name: Build with mvn
         run: mvn -P clean install
       -
-        name: Coverage report
-        run: mvn cobertura:cobertura
-      -
         name: Export coverage report
-        run: curl -s https://codecov.io/bash
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: bash <(curl -s https://codecov.io/bash)
         shell: bash
       -
         name: Log in to the Container registry
