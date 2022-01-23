@@ -43,7 +43,7 @@ jobs:
         name: Export coverage report
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run: bash <(curl -s https://codecov.io/bash)
+        run: bash <(curl -s https://codecov.io/bash) -F backend
         shell: bash
       -
         name: Log in to the Container registry
